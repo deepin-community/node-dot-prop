@@ -1,0 +1,53 @@
+Description: switch test from ava to tape
+Author: Xavier Guimard <yadd@debian.org>
+Forwarded: not-needed
+Last-Update: 2020-11-27
+
+--- a/test.js
++++ b/test.js
+@@ -1,5 +1,5 @@
+-import test from 'ava';
+-import dotProp from '.';
++const test = require('tape');
++const dotProp = require('.');
+ 
+ test('get', t => {
+ 	const fixture1 = {foo: {bar: 1}};
+@@ -56,6 +56,7 @@
+ 	F4Class.prototype.foo = 1;
+ 	const f4 = new F4Class();
+ 	t.is(dotProp.get(f4, 'foo'), 1); // #46
++	t.end();
+ });
+ 
+ test('set', t => {
+@@ -117,6 +118,7 @@
+ 	const output4 = dotProp.set(fixture4, 'foo.bar', 2);
+ 	t.is(fixture4, 'noobject');
+ 	t.is(output4, fixture4);
++	t.end();
+ });
+ 
+ test('delete', t => {
+@@ -180,6 +182,7 @@
+ 	const fixture3 = {foo: null};
+ 	t.false(dotProp.delete(fixture3, 'foo.bar'));
+ 	t.deepEqual(fixture3, {foo: null});
++	t.end();
+ });
+ 
+ test('has', t => {
+@@ -205,6 +208,7 @@
+ 	t.true(dotProp.has({'foo.baz': {bar: true}}, 'foo\\.baz.bar'));
+ 	t.true(dotProp.has({'fo.ob.az': {bar: true}}, 'fo\\.ob\\.az.bar'));
+ 	t.false(dotProp.has(undefined, 'fo\\.ob\\.az.bar'));
++	t.end();
+ });
+ 
+ test('prevent setting/getting `__proto__`', t => {
+@@ -212,4 +216,5 @@
+ 	t.not({}.unicorn, '🦄'); // eslint-disable-line no-use-extend-native/no-use-extend-native
+ 
+ 	t.is(dotProp.get({}, '__proto__'), undefined);
++	t.end();
+ });

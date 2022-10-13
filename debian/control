@@ -1,0 +1,29 @@
+Source: node-dot-prop
+Section: javascript
+Priority: optional
+Maintainer: Debian Javascript Maintainers <pkg-javascript-devel@lists.alioth.debian.org>
+Uploaders: Archana N <archana@disroot.org>,
+           Utkarsh Gupta <guptautkarsh2102@gmail.com>
+Testsuite: autopkgtest-pkg-nodejs
+Build-Depends:
+ debhelper-compat (= 13),
+ node-is-obj <!nocheck>,
+ node-tape <!nocheck>,
+ dh-sequence-nodejs
+Standards-Version: 4.6.0
+Homepage: https://github.com/sindresorhus/dot-prop
+Vcs-Git: https://salsa.debian.org/js-team/node-dot-prop.git
+Vcs-Browser: https://salsa.debian.org/js-team/node-dot-prop
+Rules-Requires-Root: no
+
+Package: node-dot-prop
+Architecture: all
+Depends:
+ ${misc:Depends},
+ node-is-obj,
+ nodejs
+Description: updates a property from a nested object
+ Get, set, or delete a property from a nested object using a dot path.
+ This package is a dependency of npm, Node.js package manager.
+ .
+ Node.js is an event-based server-side JavaScript engine.

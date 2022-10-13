@@ -1,0 +1,5 @@
+version=4
+opts=\
+dversionmangle=auto,\
+filenamemangle=s/.*?(\d[\d\.-]*@ARCHIVE_EXT@)/node-dot-prop-$1/ \
+ https://github.com/sindresorhus/dot-prop/tags .*/archive/.*/v?([\d\.]+).tar.gz

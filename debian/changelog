@@ -1,0 +1,64 @@
+node-dot-prop (6.0.1-2) unstable; urgency=medium
+
+  * team upload
+  * Fix GitHub tags regex
+  * Update standards version to 4.6.0, no changes needed
+  * Fix filenamemangle
+
+ -- Yadd <yadd@debian.org>  Thu, 04 Nov 2021 15:51:41 +0100
+
+node-dot-prop (6.0.1-1) unstable; urgency=medium
+
+  * Team upload
+
+  [ Debian Janitor ]
+  * Remove obsolete fields Contact, Name from debian/upstream/metadata
+    (already present in machine-readable debian/copyright).
+
+  [ Xavier Guimard ]
+  * Bump debhelper compatibility level to 13
+  * Declare compliance with policy 4.5.1
+  * Modernize debian/watch
+  * Use dh-sequence-nodejs
+  * New upstream version 6.0.1
+  * Refresh patch
+
+ -- Xavier Guimard <yadd@debian.org>  Fri, 27 Nov 2020 08:41:33 +0100
+
+node-dot-prop (5.2.0-1) unstable; urgency=medium
+
+  * Team upload
+  * Bump debhelper compatibility level to 12
+  * Add debian/gbp.conf
+  * Declare compliance with policy 4.4.1
+  * Add "Rules-Requires-Root: no"
+  * New upstream version 5.2.0
+  * Switch upstream test from ava to tape and enable it
+
+ -- Xavier Guimard <yadd@debian.org>  Wed, 13 Nov 2019 19:48:52 +0100
+
+node-dot-prop (4.2.0-2) unstable; urgency=medium
+
+  * Reupload to unstable
+  * Bump Standards-Version to 4.4.0 and debhelper to 12
+  * Switch install to pkg-js-tools
+
+ -- Utkarsh Gupta <guptautkarsh2102@gmail.com>  Sun, 11 Aug 2019 18:56:20 +0530
+
+node-dot-prop (4.2.0-1) experimental; urgency=medium
+
+  * New upstream version 4.2.0
+  * Bump Standards-Version to 4.3.0
+  * Bump debhelper compatibility level to 11
+  * Switch test to pkg-js-tools
+  * Add d/upstream/metadata
+  * Add myself as an uploader
+  * Update d/copyright
+
+ -- Utkarsh Gupta <guptautkarsh2102@gmail.com>  Mon, 18 Mar 2019 22:18:21 +0530
+
+node-dot-prop (4.1.1-1) unstable; urgency=low
+
+  * Initial release (Closes: #868441)
+
+ -- Archana N <archana@disroot.org>  Sat, 15 Jul 2017 13:30:08 +0000
