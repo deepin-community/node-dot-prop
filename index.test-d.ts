@@ -1,19 +1,21 @@
-import {expectType, expectAssignable} from 'tsd';
-import dotProp = require('.');
+import {expectTypeOf} from 'expect-type';
+import {getProperty, setProperty, hasProperty, deleteProperty, deepKeys} from './index.js';
 
-expectType<unknown>(dotProp.get({foo: {bar: 'unicorn'}}, 'foo.bar'));
-expectType<string | undefined>(dotProp.get<string>({foo: {bar: 'unicorn'}}, 'foo.bar'));
-expectType<unknown>(dotProp.get({foo: {bar: 'a'}}, 'foo.notDefined.deep'));
-expectAssignable<string>(
-	dotProp.get({foo: {bar: 'a'}}, 'foo.notDefined.deep', 'default value')
-);
-expectType<unknown>(
-	dotProp.get({foo: {'dot.dot': 'unicorn'}}, 'foo.dot\\.dot')
-);
+expectTypeOf(getProperty({foo: {bar: 'unicorn'}}, 'foo.bar')).toBeString();
+expectTypeOf(getProperty({foo: {bar: 'a'}}, 'foo.notDefined.deep')).toBeUndefined();
+expectTypeOf(
+	getProperty({foo: {bar: 'a'}}, 'foo.notDefined.deep', 'default value'),
+).toBeString();
+expectTypeOf(
+	getProperty({foo: {'dot.dot': 'unicorn'}}, 'foo.dot\\.dot'),
+	// @ts-expect-error type-fest's `Get` not smart enough to deal with escaped dots
+).toEqualTypeOf<string>();
 
 const object = {foo: {bar: 'a'}};
-expectType<typeof object>(dotProp.set(object, 'foo.bar', 'b'));
+expectTypeOf(setProperty(object, 'foo.bar', 'b')).toEqualTypeOf(object);
 
-expectType<boolean>(dotProp.has({foo: {bar: 'unicorn'}}, 'foo.bar'));
+expectTypeOf(hasProperty({foo: {bar: 'unicorn'}}, 'foo.bar')).toEqualTypeOf<boolean>();
 
-expectType<boolean>(dotProp.delete({foo: {bar: 'a'}}, 'foo.bar'));
+expectTypeOf(deleteProperty({foo: {bar: 'a'}}, 'foo.bar')).toEqualTypeOf<boolean>();
+
+expectTypeOf(deepKeys({foo: {bar: 'a'}})).toEqualTypeOf<string[]>();

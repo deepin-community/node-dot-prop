@@ -1,53 +1,149 @@
 Description: switch test from ava to tape
 Author: Xavier Guimard <yadd@debian.org>
 Forwarded: not-needed
-Last-Update: 2020-11-27
+Last-Update: 2022-02-20
 
 --- a/test.js
 +++ b/test.js
-@@ -1,5 +1,5 @@
+@@ -1,4 +1,4 @@
 -import test from 'ava';
--import dotProp from '.';
-+const test = require('tape');
-+const dotProp = require('.');
++import test from 'tape';
+ import {getProperty, setProperty, hasProperty, deleteProperty, escapePath, deepKeys} from './index.js';
  
- test('get', t => {
- 	const fixture1 = {foo: {bar: 1}};
-@@ -56,6 +56,7 @@
- 	F4Class.prototype.foo = 1;
- 	const f4 = new F4Class();
- 	t.is(dotProp.get(f4, 'foo'), 1); // #46
+ test('getProperty', t => {
+@@ -64,6 +64,7 @@
+ 
+ 	t.true(getProperty({'': {'': {'': true}}}, '..'));
+ 	t.true(getProperty({'': {'': true}}, '.'));
 +	t.end();
  });
  
- test('set', t => {
-@@ -117,6 +118,7 @@
- 	const output4 = dotProp.set(fixture4, 'foo.bar', 2);
- 	t.is(fixture4, 'noobject');
- 	t.is(output4, fixture4);
+ test('getProperty - with array indexes', t => {
+@@ -91,16 +92,12 @@
+ 	}, 'bar.[0]'));
+ 	t.throws(() => getProperty({
+ 		'foo[5[': true,
+-	}, 'foo[5['), {
+-		message: 'Invalid character in an index',
+-	});
++	}, 'foo[5['));
+ 	t.throws(() => getProperty({
+ 		'foo[5': {
+ 			bar: true,
+ 		},
+-	}, 'foo[5.bar'), {
+-		message: 'Invalid character in an index',
+-	});
++	}, 'foo[5.bar'));
+ 	t.true(getProperty({
+ 		'foo[5]': {
+ 			bar: true,
+@@ -110,23 +107,15 @@
+ 		'foo[5\\]': {
+ 			bar: true,
+ 		},
+-	}, 'foo[5\\].bar'), {
+-		message: 'Invalid character in an index',
+-	});
++	}, 'foo[5\\].bar'));
+ 	t.throws(() => getProperty({
+ 		'foo[5': true,
+-	}, 'foo[5'), {
+-		message: 'Index was not closed',
+-	});
++	}, 'foo[5'));
+ 	t.throws(() => getProperty({
+ 		'foo[bar]': true,
+-	}, 'foo[bar]'), {
+-		message: 'Invalid character in an index',
+-	});
++	}, 'foo[bar]'));
+ 	t.false(getProperty({}, 'constructor[0]', false));
+-	t.throws(() => getProperty({}, 'foo[constructor]', false), {
+-		message: 'Invalid character in an index',
+-	});
++	t.throws(() => getProperty({}, 'foo[constructor]', false));
+ 
+ 	t.false(getProperty([], 'foo[0].bar', false));
+ 	t.true(getProperty({foo: [{bar: true}]}, 'foo[0].bar'));
+@@ -144,20 +133,13 @@
+ 	}, false, false], '[0].\\[1]'));
+ 
+ 	t.true(getProperty({foo: {'[0]': true}}, 'foo.\\[0]'));
+-	t.throws(() => getProperty({foo: {'[0]': true}}, 'foo.[0\\]'), {
+-		message: 'Invalid character in an index',
+-	});
++	t.throws(() => getProperty({foo: {'[0]': true}}, 'foo.[0\\]'));
+ 	t.true(getProperty({foo: {'\\': [true]}}, 'foo.\\\\[0]'));
+-	t.throws(() => getProperty({foo: {'[0]': true}}, 'foo.[0\\]'), {
+-		message: 'Invalid character in an index',
+-	});
++	t.throws(() => getProperty({foo: {'[0]': true}}, 'foo.[0\\]'));
+ 
+-	t.throws(() => getProperty({'foo[0': {'9]': true}}, 'foo[0.9]'), {
+-		message: 'Invalid character in an index',
+-	});
+-	t.throws(() => getProperty({'foo[-1]': true}, 'foo[-1]'), {
+-		message: 'Invalid character in an index',
+-	});
++	t.throws(() => getProperty({'foo[0': {'9]': true}}, 'foo[0.9]'));
++	t.throws(() => getProperty({'foo[-1]': true}, 'foo[-1]'));
 +	t.end();
  });
  
- test('delete', t => {
-@@ -180,6 +182,7 @@
- 	const fixture3 = {foo: null};
- 	t.false(dotProp.delete(fixture3, 'foo.bar'));
- 	t.deepEqual(fixture3, {foo: null});
+ test('setProperty', t => {
+@@ -250,6 +232,7 @@
+ 	setProperty(fixture7, 'foo.length', 1);
+ 	t.is(fixture7.foo.length, 1);
+ 	t.deepEqual(fixture7, {foo: ['bar']});
 +	t.end();
  });
  
- test('has', t => {
-@@ -205,6 +208,7 @@
- 	t.true(dotProp.has({'foo.baz': {bar: true}}, 'foo\\.baz.bar'));
- 	t.true(dotProp.has({'fo.ob.az': {bar: true}}, 'fo\\.ob\\.az.bar'));
- 	t.false(dotProp.has(undefined, 'fo\\.ob\\.az.bar'));
+ test('deleteProperty', t => {
+@@ -346,6 +329,7 @@
+ 	const fixture6 = {};
+ 
+ 	setProperty(fixture6, 'foo.bar.0', 'fizz');
++	t.end();
+ });
+ 
+ test('hasProperty', t => {
+@@ -386,6 +370,7 @@
+ 			1: 'bar',
+ 		}}],
+ 	}, 'foo[0].bar.1'));
++	t.end();
+ });
+ 
+ test('escapePath', t => {
+@@ -401,10 +386,8 @@
+ 
+ 	t.throws(() => {
+ 		escapePath(0);
+-	}, {
+-		instanceOf: TypeError,
+-		message: 'Expected a string',
+ 	});
++	t.end();
+ });
+ 
+ test('deepKeys', t => {
+@@ -441,6 +424,7 @@
+ 
+ 	t.deepEqual(deepKeys([]), []);
+ 	t.deepEqual(deepKeys(0), []);
 +	t.end();
  });
  
  test('prevent setting/getting `__proto__`', t => {
-@@ -212,4 +216,5 @@
+@@ -448,8 +432,10 @@
  	t.not({}.unicorn, '🦄'); // eslint-disable-line no-use-extend-native/no-use-extend-native
  
- 	t.is(dotProp.get({}, '__proto__'), undefined);
+ 	t.is(getProperty({}, '__proto__'), undefined);
++	t.end();
+ });
+ 
+ test('return default value if path is invalid', t => {
+ 	t.is(getProperty({}, 'constructor', '🦄'), '🦄');
 +	t.end();
  });
