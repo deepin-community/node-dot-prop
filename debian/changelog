@@ -1,3 +1,28 @@
+node-dot-prop (7.2.0-3) unstable; urgency=medium
+
+  * Team upload
+  * Better commonjs export
+
+ -- Yadd <yadd@debian.org>  Sat, 23 Apr 2022 08:28:20 +0200
+
+node-dot-prop (7.2.0-2) unstable; urgency=medium
+
+  * Team upload
+  * Add breaks against node-configstore < 6
+  * Back to unstable
+
+ -- Yadd <yadd@debian.org>  Thu, 24 Feb 2022 09:16:16 +0100
+
+node-dot-prop (7.2.0-1) experimental; urgency=medium
+
+  * Team upload
+  * New upstream version 7.2.0
+  * Refresh test patch
+  * Build commonjs files usign mjs2cjs
+  * Update copyright
+
+ -- Yadd <yadd@debian.org>  Sun, 20 Feb 2022 11:25:04 +0100
+
 node-dot-prop (6.0.1-2) unstable; urgency=medium
 
   * team upload
